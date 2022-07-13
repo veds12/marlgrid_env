@@ -8,6 +8,8 @@ from .goalcycle import ClutteredGoalCycleEnv
 from .goaltile import ClutteredGoalTileEnv
 from .viz_test import VisibilityTestEnv
 
+from .goaltile_coordination import ClutteredGoalTileCoordinationEnv
+
 from ..agents import GridAgentInterface
 from gym.envs.registration import register as gym_register
 
@@ -279,5 +281,22 @@ register_marl_env(
     env_kwargs={
         'clutter_density':0.2,
         'n_bonus_tiles': 100,
+    }
+)
+
+
+register_marl_env(
+    "CoordinationGoaltile-5Agents-20Goals-2coordination-v1",
+    ClutteredGoalTileCoordinationEnv ,
+    n_agents=5,
+    grid_size=7,
+    max_steps=150,
+    view_size=7,
+    view_tile_size=16,
+    view_offset=1,
+    env_kwargs={
+        'clutter_density':0.2,
+        'n_bonus_tiles': 20,
+        'coordination_level':2,
     }
 )
