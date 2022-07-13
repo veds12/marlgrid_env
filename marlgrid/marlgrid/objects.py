@@ -258,6 +258,30 @@ class GoalOne(WorldObj):
         fill_coords(img, point_in_rect(0, 1, 0, 1), COLORS[self.color])
 
 
+class GoalTeam(WorldObj):
+    def __init__(self, reward,coordination, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.reward = reward
+        self.state = True
+        self.coordination=coordination
+
+
+    def can_overlap(self):
+        return True
+
+    def get_reward(self, agent):
+        if self.state and len(self.agents)>=self.coordination:#this reward can only be collected if k agents are on it simutaneously
+            self.state = False
+            self.color = "black"
+            return self.reward
+        else:
+            return 0
+
+    def str_render(self, dir=0):
+        return "GG"
+
+    def render(self, img):
+        fill_coords(img, point_in_rect(0, 1, 0, 1), COLORS[self.color])
 class Floor(WorldObj):
     def can_overlap(self):
         return True# and self.agent is None
