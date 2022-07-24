@@ -238,14 +238,14 @@ class GoalOne(WorldObj):
     def __init__(self, reward, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.reward = reward
-        self.state = True
+        self.active = True
 
     def can_overlap(self):
         return True
 
     def get_reward(self, agent):
-        if self.state:
-            self.state = False
+        if self.active:
+            self.active = False
             self.color = "black"
             return self.reward
         else:
@@ -259,19 +259,18 @@ class GoalOne(WorldObj):
 
 
 class GoalTeam(WorldObj):
-    def __init__(self, reward,coordination, *args, **kwargs):
+    def __init__(self, reward, coordination, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.reward = reward
-        self.state = True
+        self.active = True
         self.coordination=coordination
-
 
     def can_overlap(self):
         return True
 
     def get_reward(self, agent):
-        if self.state and len(self.agents)>=self.coordination:#this reward can only be collected if k agents are on it simutaneously
-            self.state = False
+        if self.active and len(self.agents)>=self.coordination:#this reward can only be collected if k agents are on it simutaneously
+            self.active = False
             self.color = "black"
             return self.reward
         else:
@@ -282,6 +281,7 @@ class GoalTeam(WorldObj):
 
     def render(self, img):
         fill_coords(img, point_in_rect(0, 1, 0, 1), COLORS[self.color])
+
 class Floor(WorldObj):
     def can_overlap(self):
         return True# and self.agent is None
@@ -303,16 +303,15 @@ class Floor(WorldObj):
 
 
 class EmptySpace(WorldObj):
-    def can_verlap(self):
+    def can_overlap(self):
         return True
 
     def str_render(self, dir=0):
         return "  "
 
-
 class Lava(WorldObj):
     def can_overlap(self):
-        return True# and self.agent is None
+        return True # and self.agent is None
 
     def str_render(self, dir=0):
         return "VV"
@@ -376,7 +375,6 @@ class Ball(WorldObj):
     def render(self, img):
         fill_coords(img, point_in_circle(0.5, 0.5, 0.31), COLORS[self.color])
 
-
 class Door(WorldObj):
     states = IntEnum("door_state", "open closed locked")
 
@@ -424,7 +422,6 @@ class Door(WorldObj):
 
             # Draw door handle
             fill_coords(img, point_in_circle(cx=0.75, cy=0.50, r=0.08), c)
-
 
 class Box(WorldObj):
     def __init__(self, color=0, state=0, contains=None):

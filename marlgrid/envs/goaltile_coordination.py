@@ -1,8 +1,8 @@
-from ..base import MultiGridEnv_coodination, MultiGrid
+from ..base import MultiGridEnv, MultiGrid
 from ..objects import *
 
 
-class ClutteredGoalTileCoordinationEnv(MultiGridEnv_coodination):
+class ClutteredGoalTileCoordinationEnv(MultiGridEnv):
     mission = "collect as many treasures as possible"
     metadata = {}
 

@@ -13,7 +13,7 @@ class ClutteredMultiGrid(MultiGridEnv):
         super().__init__(*args, **kwargs)
 
         if clutter_density is not None:
-            self.n_clutter = int(clutter_density * (self.width-2)*(self.height-2))
+            self.n_clutter = int(clutter_density * (self.width - 2)*(self.height - 2))
         else:
             self.n_clutter = n_clutter
 
